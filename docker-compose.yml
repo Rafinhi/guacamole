@@ -1,0 +1,59 @@
+version: '2.0'
+
+# networks
+# create a network 'guacnetwork_compose' in mode 'bridged'
+networks:
+  guacnetwork_compose:
+    driver: bridge
+
+# services
+services:
+  mariadb:
+    container_name: mariadb
+    image: linuxserver/mariadb:latest
+    restart: always
+    networks:
+      - guacnetwork_compose
+    security_opt:
+      - no-new-privileges:true
+#    ports:
+#      - "3306:3306"
+    volumes:
+      - /home/rafinhi/docker/mariadb/data:/config
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PUID=1000
+      - PGID=1001
+      - MYSQL_ROOT_PASSWORD=test123
+
+# Guacamole Daemon - Needed for Guacamole
+  guacd:
+    image: guacamole/guacd
+    container_name: guacd
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - guacnetwork_compose
+
+
+# Guacamole - Remote desktop, SSH, on Telnet on any HTML5 Browser 
+# Create all databases and tables first
+  guacamole:
+    image: guacamole/guacamole:latest
+    container_name: guacamole
+    restart: unless-stopped
+    networks:
+      - guacnetwork_compose
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "8080:8080"
+    environment:
+      GUACD_HOSTNAME: guacd
+      MYSQL_HOSTNAME: mariadb
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: guacamole
+      MYSQL_USER: guacdb_user
+      MYSQL_PASSWORD: my_strong_password
