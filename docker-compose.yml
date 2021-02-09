@@ -10,7 +10,7 @@ networks:
 services:
   mariadb:
     container_name: mariadb
-    image: linuxserver/mariadb:latest
+    image: mariadb:latest
     restart: always
     networks:
       - guacnetwork_compose
