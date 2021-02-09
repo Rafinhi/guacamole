@@ -19,7 +19,7 @@ services:
 #    ports:
 #      - "3306:3306"
     volumes:
-      - /${HOME}/docker/mariadb/data:/config
+      - ~/mariadb/data:/config
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment:
