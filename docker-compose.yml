@@ -19,12 +19,12 @@ services:
 #    ports:
 #      - "3306:3306"
     volumes:
-      - $USER/home/docker/mariadb/data:/config
+      - /home/$USER/docker/mariadb/data:/config
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - PUID=1000
-      - PGID=1001
+      #- PUID=1000
+      #- PGID=1001
       - MYSQL_ROOT_PASSWORD=test123
 
 # Guacamole Daemon - Needed for Guacamole
