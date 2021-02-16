@@ -73,7 +73,7 @@ services:
    links:
    - guacamole
    networks:
-     guacnetwork_compose
+     guacnetwork_compose:
    # run nginx
    command: /bin/bash -c "nginx -g 'daemon off;'"
 # nginx-debug-mode
